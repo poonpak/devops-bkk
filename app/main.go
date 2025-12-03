@@ -1,30 +1,39 @@
 package main
 
 import (
-    "encoding/json"
-    "fmt"
-    "log"
-    "net/http"
+	"fmt"
+	"log"
+	"net/http"
 )
 
 type Simple struct {
-    Name        string
-    Description string
-    Url         string
+	Name        string
+	Description string
+	Url         string
 }
 
+// func handler(w http.ResponseWriter, r *http.Request) {
+//     simple := Simple{"Hello", "World", r.Host}
+
+//     jsonOutput, _ := json.Marshal(simple)
+
+//     w.Header().Set("Content-Type", "application/json")
+
+//	    fmt.Fprintln(w, string(jsonOutput))
+//	}
+//
+// ...
+func SimpleFactory(host string) Simple {
+	return Simple{"Hello", "World", host}
+}
+
+// ...
 func handler(w http.ResponseWriter, r *http.Request) {
-    simple := Simple{"Hello", "World", r.Host}
-
-    jsonOutput, _ := json.Marshal(simple)
-
-    w.Header().Set("Content-Type", "application/json")
-
-    fmt.Fprintln(w, string(jsonOutput))
+	SimpleFactory(r.Host)
 }
 
 func main() {
-    fmt.Println("Server started on port 4444")
-    http.HandleFunc("/", handler)
-    log.Fatal(http.ListenAndServe(":4444", nil))
+	fmt.Println("Server started on port 4444")
+	http.HandleFunc("/", handler)
+	log.Fatal(http.ListenAndServe(":4444", nil))
 }
