@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'scp main laborant@target:~'
+                sh 'scp -i ~/.ssh/jenkins main laborant@target:~'
             }
         }
 
