@@ -6,6 +6,12 @@ pipeline {
     }
 
     stages {
+        stage('Check OS User') {
+            steps {
+                sh 'echo "Running Ansible as user: $(whoami)"' // <-- คำสั่งนี้จะแสดงชื่อผู้ใช้
+                sh 'echo "Current working directory is: $(pwd)"'
+            }
+        }
         stage('Test') {
               steps {
                    sh "go test ./..."
