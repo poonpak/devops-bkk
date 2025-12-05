@@ -19,8 +19,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 withCredentials([file(credentialsId: 'my-key-file', variable: 'KEY_PATH')]) {
-                    sh "chmod 400 ${KEY_PATH}"
-                    sh "scp -i ${KEY_PATH} -o StrictHostKeyChecking=no main laborant@target:~"
+                    sh "ansible-playbook --inventory hosts.ini playbook.yaml"
                 }
             }
         }
