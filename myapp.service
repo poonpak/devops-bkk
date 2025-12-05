@@ -1,0 +1,14 @@
+[Unit]
+Description=My Go Web Service
+After=network.target
+
+[Service]
+User=laborant
+WorkingDirectory=/etc/myapp
+ExecStart=/usr/local/bin/myapp     # 💡 คำสั่งคือเรียกใช้ไฟล์ไบนารีโดยตรง
+Restart=always
+RestartSec=5
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target
