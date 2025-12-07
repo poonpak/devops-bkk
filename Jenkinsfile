@@ -21,6 +21,7 @@ pipeline {
                 withCredentials([file(credentialsId: 'my-key-file', variable: 'KEY_PATH')]) {
                     sh "chmod 400 ${KEY_PATH}"
                     sh "scp -i ${KEY_PATH} -o StrictHostKeyChecking=no main laborant@target:~"
+                    sh "scp my-app.service user@remote_server_ip:/etc/systemd/system/"
                 }
             }
         }
