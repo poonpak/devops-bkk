@@ -16,6 +16,8 @@ pipeline {
                 sh "go build app/main.go"
             }
         }
+        stage('Image') {
+        }
         stage('Deploy') {
             steps {
                 withCredentials([file(credentialsId: 'my-key-file', variable: 'KEY_PATH')]) {
