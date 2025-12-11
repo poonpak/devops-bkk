@@ -22,11 +22,13 @@ pipeline {
                 sh "docker push ttl.sh/myapp_pp:1h"
             }
         }
-        /*
+        
         stage('Deploy') {
             steps {
                 withCredentials([file(credentialsId: 'my-key-file', variable: 'KEY_PATH')]) {
                     sh "chmod 400 ${KEY_PATH}"
+                    sh "docker run -d -p 4444:4444 ttl.sh/myapp_pp:1h"
+                    /*
                     sh "scp -i ${KEY_PATH} -o StrictHostKeyChecking=no main laborant@target:~"
                     sh """
                         scp -i ${KEY_PATH} -o StrictHostKeyChecking=no my-app.service laborant@target:~
@@ -41,11 +43,12 @@ pipeline {
                             exit 0
                         EOF
                     """
+                    */
                 }
             }
             
         }
-        */
+        
 
     }
 }
