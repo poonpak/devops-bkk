@@ -18,6 +18,7 @@ pipeline {
         }
         stage('Image') {
             sh "docker build -t ttl.sh/myapp_pp:1h ."
+            sh "docker push ttl.sh/myapp_pp:1h"
         }
         /*
         stage('Deploy') {
