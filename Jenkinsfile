@@ -17,7 +17,9 @@ pipeline {
             }
         }
         stage('Image') {
+            sh "docker build -t ttl.sh/myapp_pp:1h ."
         }
+        /*
         stage('Deploy') {
             steps {
                 withCredentials([file(credentialsId: 'my-key-file', variable: 'KEY_PATH')]) {
@@ -38,7 +40,9 @@ pipeline {
                     """
                 }
             }
+            
         }
+        */
 
     }
 }
