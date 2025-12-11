@@ -27,9 +27,11 @@ pipeline {
             steps {
                 withCredentials([file(credentialsId: 'my-key-file', variable: 'KEY_PATH')]) {
                     sh "chmod 400 ${KEY_PATH}"
-                    ssh -i ${KEY_PATH} -o StrictHostKeyChecking=no jenkins@docker << EOF
+                    sh """
+                        ssh -i ${KEY_PATH} -o StrictHostKeyChecking=no jenkins@docker << EOF
                             docker run -d -p 4444:4444 ttl.sh/myapp_pp:1h
                         EOF
+                    """
                     /*
                     sh "scp -i ${KEY_PATH} -o StrictHostKeyChecking=no main laborant@target:~"
                     sh """
