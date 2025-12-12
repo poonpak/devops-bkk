@@ -24,7 +24,17 @@ pipeline {
         }
         
         stage('Deploy') {
+            
             steps {
+                /*
+                withCredentials([sshUserPrivateKey(
+                        credentialsId: 'my-ssh-credential', // ใช้ Credentials ID ที่ระบุใน Jenkins UI <<< changeit
+                        usernameVariable: 'SSH_USER',        // ตัวแปรสำหรับเก็บชื่อผู้ใช้
+                        keyFileVariable: 'SSH_KEY_PATH',     // ตัวแปรสำหรับเก็บพาธของ Private Key (เป็นไฟล์ชั่วคราว)
+                        passphraseVariable: 'SSH_PASSPHRASE' // (ทางเลือก) ตัวแปรสำหรับเก็บ Passphrase ถ้ามี
+                    )]) {
+                }
+                */
                 withCredentials([file(credentialsId: 'my-key-file', variable: 'KEY_PATH')]) {
                     sh "chmod 400 ${KEY_PATH}"
                     sh """
