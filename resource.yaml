@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: myapp
+  name: myapp
+spec:
+  containers:
+  - image: ttl.sh/myapp:1h
+    name: myapp
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+
+kind: Service
+metadata:
+  labels:
+    run: myapp
+  name: myapp
+spec:
+  ports:
+  - port: 4444
+    protocol: TCP
+    targetPort: 4444
+  selector:
+    run: myapp
+  type: NodePort
+status:
+  loadBalancer: {}
