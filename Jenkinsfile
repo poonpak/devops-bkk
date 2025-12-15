@@ -13,30 +13,16 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh "go build app/main.go"
+                sh "go build main.go"
             }
         }
         stage('Deploy') {
-            steps {
-                withCredentials([file(credentialsId: 'my-key-file', variable: 'KEY_PATH')]) {
-                    sh "chmod 400 ${KEY_PATH}"
-                    sh "scp -i ${KEY_PATH} -o StrictHostKeyChecking=no main laborant@target:~"
-                    sh """
-                        scp -i ${KEY_PATH} -o StrictHostKeyChecking=no my-app.service laborant@target:~
-                        ssh -i ${KEY_PATH} -o StrictHostKeyChecking=no laborant@target << EOF
-                            # ย้ายไบนารีไปยังพาธรันไทม์ (ตัวอย่าง /usr/local/bin)
-                            sudo mv ~/main /usr/local/bin/main 
-                            # ย้าย Service Unit ไปยัง systemd ด้วย sudo
-                            sudo mv ~/my-app.service /etc/systemd/system/my-app.service
-                            # โหลดการตั้งค่า systemd และรีสตาร์ท Service
-                            sudo systemctl daemon-reload
-                            sudo systemctl restart my-app.service
-                            exit 0
-                        EOF
-                    """
-                }
+          steps {
+              withCredentials([sshUserPrivateKey(credentialsId: 'mykey', keyFileVariable: 'FILENAME', usernameVariable: 'USERNAME')]) {
+                sh 'ssh -o StrictHostKeyChecking=no -i ${FILENAME} ${USERNAME}@18.142.142.232 "sudo systemctl stop myapp" || true' 
+                sh 'scp -o StrictHostKeyChecking=no -i ${FILENAME} main ${USERNAME}@18.142.142.232:'
             }
+          }
         }
-
     }
 }
