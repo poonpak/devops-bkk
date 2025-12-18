@@ -1,18 +1,9 @@
 [Unit]
-Description=My app
+Description=My Application Service
 After=network.target
 
 [Service]
-User=laborant            ; เปลี่ยนเป็นชื่อผู้ใช้ที่คุณต้องการให้รันโปรแกรม
-WorkingDirectory=/home/laborant ; เปลี่ยนเป็นพาธของโปรแกรม 
-ExecStart=main
-SuccessExitStatus=143
-# Optional: สำหรับการรีสตาร์ทอัตโนมัติเมื่อเกิดข้อผิดพลาด
-Restart=on-failure
-RestartSec=10
-StandardOutput=journal
-StandardError=journal
+ExecStart=/home/laborant/main
 
 [Install]
 WantedBy=multi-user.target
-
