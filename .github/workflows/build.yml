@@ -24,4 +24,9 @@ jobs:
       
     - name: Build
       run: go build app/main.go
+    - name: Deploy
+      run: >
+        echo "${{ secrets.Deploy }}" > ~/.ssh/deploy
+        chmod 600 ~/.ssh/deploy
+        scp -o StrictHostKeyChecking=no -i ~/.ssh/deploy main laborant@target:
 
