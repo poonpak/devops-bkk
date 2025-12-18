@@ -27,16 +27,11 @@ jobs:
     - name: Deploy
       run: >
         echo "${{ secrets.Deploy }}" > ~/.ssh/deploy
-        chmod 600 ~/.ssh/deploy
+        chmod 400 ~/.ssh/deploy
         ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy laborant@target "sudo systemctl stop myapp" || true
-        
         scp -o StrictHostKeyChecking=no -i ~/.ssh/deploy main laborant@target:
-
         scp -o StrictHostKeyChecking=no -i ~/.ssh/deploy myapp.service laborant@target:
-
         ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy laborant@target "sudo mv ~/myapp.service /etc/systemd/system"
-
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy laborant@target "sudo systemctl daemon-reload"
-        
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy laborant@target "sudo systemctl daemon-reload"  
         ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy laborant@target "sudo systemctl start myapp"
 
