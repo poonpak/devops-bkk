@@ -30,7 +30,7 @@ jobs:
         chmod 600 key.pem
         ssh -o StrictHostKeyChecking=no -i ./key.pem laborant@target "sudo systemctl stop my-app" || true
         scp -o StrictHostKeyChecking=no -i ./key.pem main laborant@target:
-        scp -o StrictHostKeyChecking=no -i ./key.pem myapp.service laborant@target:
+        scp -o StrictHostKeyChecking=no -i ./key.pem my-app.service laborant@target:
         ssh -o StrictHostKeyChecking=no -i ./key.pem laborant@target "sudo mv ~/my-app.service /etc/systemd/system"
         ssh -o StrictHostKeyChecking=no -i ./key.pem laborant@target "sudo systemctl daemon-reload"  
         ssh -o StrictHostKeyChecking=no -i ./key.pem laborant@target "sudo systemctl start my-app"
