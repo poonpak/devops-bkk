@@ -27,7 +27,7 @@ jobs:
     - name: Deploy
       run: |
         echo "${{ secrets.Deploy }}" > key.pem
-        chmod 400 ~/.ssh/deploy
+        chmod 600 key.pem
         ssh -o StrictHostKeyChecking=no -i ./key.pem laborant@target "sudo systemctl stop my-app" || true
         scp -o StrictHostKeyChecking=no -i ./key.pem main laborant@target:
         scp -o StrictHostKeyChecking=no -i ./key.pem myapp.service laborant@target:
