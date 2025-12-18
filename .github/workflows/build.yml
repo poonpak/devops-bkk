@@ -25,7 +25,7 @@ jobs:
     - name: Build
       run: go build app/main.go
     - name: Deploy
-      run: >
+      run: |
         echo "${{ secrets.Deploy }}" > ~/.ssh/deploy
         chmod 400 ~/.ssh/deploy
         ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy laborant@target "sudo systemctl stop myapp" || true
