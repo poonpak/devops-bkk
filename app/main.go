@@ -24,6 +24,7 @@ type Simple struct {
 //
 // ...
 func SimpleFactory(host string) Simple {
+	fmt.Println("Application:", "Hello")
 	return Simple{"Hello", "World", host}
 }
 
